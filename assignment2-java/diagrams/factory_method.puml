@@ -1,0 +1,48 @@
+@startuml
+title Factory Method Pattern - Logistics Transport Architecture
+
+package "kz.astanait.assignment2.transport" {
+    interface Transport <<Product>> {
+        + deliver(cargo: String, destination: String): void
+    }
+
+    class Truck <<ConcreteProduct>> {
+        + deliver(cargo: String, destination: String): void
+    }
+
+    class Ship <<ConcreteProduct>> {
+        + deliver(cargo: String, destination: String): void
+    }
+
+    Transport <|.. Truck : implements
+    Transport <|.. Ship : implements
+}
+
+package "kz.astanait.assignment2.logistics" {
+    abstract class Logistics <<Creator>> {
+        + {abstract} createTransport(): Transport
+        + planDelivery(cargo: String, destination: String): void
+    }
+
+    class RoadLogistics <<ConcreteCreator>> {
+        + createTransport(): Transport
+    }
+
+    class SeaLogistics <<ConcreteCreator>> {
+        + createTransport(): Transport
+    }
+
+    Logistics <|-- RoadLogistics : extends
+    Logistics <|-- SeaLogistics : extends
+}
+
+RoadLogistics ..> Truck : <<creates>>
+SeaLogistics ..> Ship : <<creates>>
+Logistics ..> Transport : <<uses>>
+
+note right of Logistics::planDelivery
+  Transport t = createTransport();
+  t.deliver(cargo, destination);
+end note
+
+@enduml

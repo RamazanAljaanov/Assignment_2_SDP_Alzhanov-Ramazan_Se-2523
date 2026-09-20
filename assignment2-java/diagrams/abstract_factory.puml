@@ -1,0 +1,80 @@
+@startuml
+title Abstract Factory Pattern - Cross-Platform UI Component Architecture
+
+package "kz.astanait.assignment2.ui.button" {
+    interface Button <<AbstractProductA>> {
+        + paint(): void
+    }
+
+    class WindowsButton <<ConcreteProductA1>> {
+        + paint(): void
+    }
+
+    class MacOSButton <<ConcreteProductA2>> {
+        + paint(): void
+    }
+
+    Button <|.. WindowsButton : implements
+    Button <|.. MacOSButton : implements
+}
+
+package "kz.astanait.assignment2.ui.checkbox" {
+    interface Checkbox <<AbstractProductB>> {
+        + paint(): void
+    }
+
+    class WindowsCheckbox <<ConcreteProductB1>> {
+        + paint(): void
+    }
+
+    class MacOSCheckbox <<ConcreteProductB2>> {
+        + paint(): void
+    }
+
+    Checkbox <|.. WindowsCheckbox : implements
+    Checkbox <|.. MacOSCheckbox : implements
+}
+
+package "kz.astanait.assignment2.ui.factory" {
+    interface GUIFactory <<AbstractFactory>> {
+        + createButton(): Button
+        + createCheckbox(): Checkbox
+    }
+
+    class WindowsFactory <<ConcreteFactory1>> {
+        + createButton(): Button
+        + createCheckbox(): Checkbox
+    }
+
+    class MacOSFactory <<ConcreteFactory2>> {
+        + createButton(): Button
+        + createCheckbox(): Checkbox
+    }
+
+    GUIFactory <|.. WindowsFactory : implements
+    GUIFactory <|.. MacOSFactory : implements
+}
+
+package "kz.astanait.assignment2.app" {
+    class DeliveryApplication <<Client>> {
+        - button: Button
+        - checkbox: Checkbox
+        - logistics: Logistics
+        + DeliveryApplication(factory: GUIFactory, logistics: Logistics)
+        + renderUI(): void
+        + planDelivery(cargo: String, destination: String): void
+        + run(cargo: String, destination: String): void
+    }
+}
+
+WindowsFactory ..> WindowsButton : <<creates>>
+WindowsFactory ..> WindowsCheckbox : <<creates>>
+
+MacOSFactory ..> MacOSButton : <<creates>>
+MacOSFactory ..> MacOSCheckbox : <<creates>>
+
+DeliveryApplication --> GUIFactory : <<injected dependency>>
+DeliveryApplication --> Button : <<uses>>
+DeliveryApplication --> Checkbox : <<uses>>
+
+@enduml
