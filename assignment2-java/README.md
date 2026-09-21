@@ -5,7 +5,7 @@
 **Programme**: 6B06102 Software Engineering | Year 2, Trimester 4  
 **Student**: Ramazan Alzhanov (Aljanov)  
 **Instructor**: Yerassyl Bekenov  
-**Repository**: [https://github.com/RamazanAljaanov/Assignment_2_SDP_Factory_method_and_Abstract_method](https://github.com/RamazanAljaanov/Assignment_2_SDP_Factory_method_and_Abstract_method)
+
 
 ---
 
